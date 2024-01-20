@@ -1,3 +1,6 @@
+#!/bin/bash
+echo $SHELL
+echo $PATH
 set -eux pipefail
 
 # Install plug-ins (you can git-pull to update them later).
@@ -25,10 +28,11 @@ sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
 sudo cp configs/.vimrc ~/.vimrc
 sudo cp configs/.zprofile ~/.zprofile
-source ~/.vimrc
-source ~/.zprofile
-source ~/.zshrc
-source ~/.p10k.zsh
+. ~/.vimrc
+. ~/.zprofile
+. ~/.zshrc
+. ~/.p10k.zsh
+
 # Switch the shell.
 chsh -s $(which zsh)
 echo "Zsh setup and configuration completed."
