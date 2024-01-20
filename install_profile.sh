@@ -28,7 +28,6 @@ sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
 sudo cp configs/.vimrc ~/.vimrc
 sudo cp configs/.zprofile ~/.zprofile
-. ~/.vimrc
 . ~/.zprofile
 . ~/.zshrc
 . ~/.p10k.zsh
