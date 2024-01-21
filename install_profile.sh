@@ -57,6 +57,17 @@ else
     # Clone the zsh-autosuggestions repository
     git clone https://github.com/zsh-users/zsh-autosuggestions "$autosuggestions_dir"
 fi
+
+# Check if Powerlevel10k is installed
+if ! command -v p10k &>/dev/null; then
+    echo "Powerlevel10k is not installed. Installing..."
+    if [ ! -d "$HOME/powerlevel10k" ]; then
+        # Install Powerlevel10k by cloning the repository
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+    fi
+    echo "Powerlevel10k has been installed. Please reopen your terminal. Run: p10k configure to configure powerlevel10k from start"
+    exit 0
+fi
 # Function to create a backup (.bak) of a file if it exists
 backup_file() {
     if [ -f "$1" ]; then
@@ -75,9 +86,9 @@ sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
 sudo cp configs/.vimrc ~/.vimrc
 sudo cp configs/.zprofile ~/.zprofile
-. ~/.zprofile
-. ~/.zshrc
-. ~/.p10k.zsh
+source ~/.zprofile
+source ~/.zshrc
+source ~/.p10k.zsh
 
 # Switch the shell.
 chsh -s $(which zsh)
