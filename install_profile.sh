@@ -2,6 +2,40 @@
 echo $SHELL
 echo $PATH
 set -eux pipefail
+#!/bin/bash
+
+# Check if direnv is installed
+if ! command -v direnv &>/dev/null; then
+    echo "direnv is not installed. Installing..."
+    
+    # Install direnv using the appropriate package manager for your system
+    if command -v dnf &>/dev/null; then
+        sudo dnf install direnv -y
+    elif command -v apt-get &>/dev/null; then
+        sudo apt-get install direnv -y
+    else
+        echo "Unsupported package manager. Please install direnv manually."
+        exit 1
+    fi
+    
+    echo "direnv has been installed."
+fi
+
+# Check if pyenv is installed
+if ! command -v pyenv &>/dev/null; then
+    echo "pyenv is not installed. Installing..."
+    
+    # Install pyenv
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    
+    # Reload the shell
+    exec "$SHELL"
+    
+    echo "pyenv has been installed. Please reopen your terminal."
+    exit 0
+fi
+
+echo "Both pyenv and direnv are installed."
 
 # Install plug-ins (you can git-pull to update them later).
 # Define the plugin directories
@@ -22,7 +56,19 @@ else
     # Clone the zsh-autosuggestions repository
     git clone https://github.com/zsh-users/zsh-autosuggestions "$autosuggestions_dir"
 fi
+# Function to create a backup (.bak) of a file if it exists
+backup_file() {
+    if [ -f "$1" ]; then
+        mv "$1" "$1.bak"
+        echo "Backed up $1 to $1.bak"
+    fi
+}
 
+# Backup existing configuration files if they exist
+backup_file ~/.zshrc
+backup_file ~/.p10k.zsh
+backup_file ~/.vimrc
+backup_file ~/.zprofile
 # Replace the configs with the saved one.
 sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
