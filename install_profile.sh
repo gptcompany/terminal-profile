@@ -3,12 +3,6 @@ echo $SHELL
 echo $PATH
 set -eux pipefail
 
-# Check if .pyenv folder already exists, and if yes, delete it
-if [ -d "$HOME/.pyenv" ]; then
-    echo "Found existing .pyenv folder. Deleting..."
-    rm -rf ~/.pyenv
-fi
-
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
     echo "direnv is not installed. Installing..."
@@ -29,7 +23,11 @@ fi
 # Check if pyenv is installed
 if ! command -v pyenv &>/dev/null; then
     echo "pyenv is not installed. Installing..."
-
+        # Check if .pyenv folder already exists, and if yes, delete it
+    if [ -d "$HOME/.pyenv" ]; then
+        echo "Found existing .pyenv folder. Deleting..."
+        rm -rf ~/.pyenv
+    fi
     # Clone pyenv from GitHub
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
