@@ -14,7 +14,7 @@ if ! command -v direnv &>/dev/null; then
         sudo apt-get install direnv -y
     else
         echo "Unsupported package manager. Please install direnv manually."
-        exit 1
+        
     fi
 
     echo "direnv has been installed."
@@ -33,7 +33,7 @@ if ! command -v pyenv &>/dev/null; then
 
 
     echo "pyenv has been installed. Please reopen your terminal."
-    exit 0
+    
 fi
 
 echo "Both pyenv and direnv are installed."
@@ -66,7 +66,7 @@ if ! command -v p10k &>/dev/null; then
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
     fi
     echo "Powerlevel10k has been installed. Please reopen your terminal. Run: p10k configure to configure powerlevel10k from start"
-    exit 0
+    
 fi
 # Function to create a backup (.bak) of a file if it exists
 backup_file() {
