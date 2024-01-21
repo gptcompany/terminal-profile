@@ -2,12 +2,17 @@
 echo $SHELL
 echo $PATH
 set -eux pipefail
-#!/bin/bash
+
+# Check if .pyenv folder already exists, and if yes, delete it
+if [ -d "$HOME/.pyenv" ]; then
+    echo "Found existing .pyenv folder. Deleting..."
+    rm -rf ~/.pyenv
+fi
 
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
     echo "direnv is not installed. Installing..."
-    
+
     # Install direnv using the appropriate package manager for your system
     if command -v dnf &>/dev/null; then
         sudo dnf install direnv -y
@@ -17,20 +22,18 @@ if ! command -v direnv &>/dev/null; then
         echo "Unsupported package manager. Please install direnv manually."
         exit 1
     fi
-    
+
     echo "direnv has been installed."
 fi
 
 # Check if pyenv is installed
 if ! command -v pyenv &>/dev/null; then
     echo "pyenv is not installed. Installing..."
-    
-    # Install pyenv
+
+    # Clone pyenv from GitHub
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-    
-    # Reload the shell
-    exec "$SHELL"
-    
+
+
     echo "pyenv has been installed. Please reopen your terminal."
     exit 0
 fi
