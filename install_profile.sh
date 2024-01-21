@@ -57,13 +57,21 @@ else
     # Clone the zsh-autosuggestions repository
     git clone https://github.com/zsh-users/zsh-autosuggestions "$autosuggestions_dir"
 fi
+# Check if Poetry is installed
+if ! command -v poetry &>/dev/null; then
+    echo "Poetry is not installed. Installing..."
 
+    # Install Poetry using the official installation script
+    curl -sSL https://install.python-poetry.org | python3 -
+    
+    echo "Poetry has been installed."
+fi
 # Check if Powerlevel10k is installed
 if ! command -v p10k &>/dev/null; then
     echo "Powerlevel10k is not installed. Installing..."
     if [ ! -d "$HOME/powerlevel10k" ]; then
         # Install Powerlevel10k by cloning the repository
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     fi
     echo "Powerlevel10k has been installed. Please reopen your terminal. Run: p10k configure to configure powerlevel10k from start"
     
@@ -79,17 +87,16 @@ backup_file() {
 # Backup existing configuration files if they exist
 backup_file ~/.zshrc
 backup_file ~/.p10k.zsh
-backup_file ~/.vimrc
 backup_file ~/.zprofile
 # Replace the configs with the saved one.
 sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
-sudo cp configs/.vimrc ~/.vimrc
 sudo cp configs/.zprofile ~/.zprofile
+echo 'export PATH="$HOME/.local/share/pypoetry/venv/bin:$PATH"' >> ~/.zshrc
+echo 'export PATH="$HOME/powerlevel10k:$PATH"' >> ~/.zshrc
 source ~/.zprofile
-source ~/.zshrc
 source ~/.p10k.zsh
-
+source ~/.zshrc
 # Switch the shell.
 chsh -s $(which zsh)
 echo "Zsh setup and configuration completed."
