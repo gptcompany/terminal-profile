@@ -92,8 +92,8 @@ backup_file ~/.zprofile
 sudo cp configs/.zshrc ~/.zshrc
 sudo cp configs/.p10k.zsh ~/.p10k.zsh
 sudo cp configs/.zprofile ~/.zprofile
-echo 'export PATH="$HOME/.local/share/pypoetry/venv/bin:$PATH"' >> ~/.zshrc
-echo 'export PATH="$HOME/powerlevel10k:$PATH"' >> ~/.zshrc
+sudo echo 'export PATH="$HOME/.local/share/pypoetry/venv/bin:$PATH"' >> ~/.zshrc
+sudo echo 'export PATH="$HOME/powerlevel10k:$PATH"' >> ~/.zshrc
 source ~/.zprofile
 source ~/.p10k.zsh
 source ~/.zshrc
