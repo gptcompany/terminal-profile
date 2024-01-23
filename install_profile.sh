@@ -69,7 +69,7 @@ fi
 # Check if Powerlevel10k is installed
 if ! command -v p10k &>/dev/null; then
     echo "Powerlevel10k is not installed. Installing..."
-    if [ ! -d "$HOME/powerlevel10k" ]; then
+    if [ ! -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
         # Install Powerlevel10k by cloning the repository
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     fi
