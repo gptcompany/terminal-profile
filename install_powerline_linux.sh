@@ -17,6 +17,6 @@ cd ~
 rm -rf "$temp_fonts_dir"
 
 # Install Patched Font
-mkdir ~/.fonts
-sudo cp -a fonts/. ~/.fonts/
+mkdir -p /home/ec2-user/.fonts
+sudo cp -a ./fonts ~/.fonts/
 fc-cache -vf ~/.fonts/
