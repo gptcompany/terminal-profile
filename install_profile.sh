@@ -1,7 +1,8 @@
 #!/bin/bash
-echo $SHELL
-echo $PATH
-
+current_user=$(whoami)
+echo "Current user: $current_user"
+echo "Current shell: $SHELL"
+echo "Current PATH: $PATH"
 
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
@@ -105,5 +106,8 @@ source ~/.p10k.zsh
 source ~/.zshrc
 # Switch the shell.
 
-sudo chsh -s $(which zsh)
+if [ "$current_user" = "ec2-user" ] || [ "$current_user" = "ubuntu" ]; then
+    echo "Changing shell for $current_user"
+    sudo chsh -s $(which zsh) "$current_user"
+fi
 echo "Zsh setup and configuration completed."
