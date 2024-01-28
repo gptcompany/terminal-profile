@@ -19,4 +19,5 @@ rm -rf "$temp_fonts_dir"
 # Install Patched Font
 mkdir -p /home/ec2-user/.fonts
 sudo cp -a terminal-profile/fonts/. /home/ec2-user/.fonts/
+sudo yum install fontconfig -y
 fc-cache -vf ~/.fonts/
