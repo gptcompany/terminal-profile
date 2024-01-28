@@ -9,9 +9,13 @@ if ! command -v direnv &>/dev/null; then
 
     # Install direnv using the appropriate package manager for your system
     if command -v dnf &>/dev/null; then
-        sudo dnf install direnv -y
+        curl -sfL https://direnv.net/install.sh | bash
+        eval "$(direnv hook zsh)"
+
     elif command -v apt-get &>/dev/null; then
         sudo apt-get install direnv -y
+        eval "$(direnv hook zsh)"
+
     else
         echo "Unsupported package manager. Please install direnv manually."
         
@@ -94,6 +98,7 @@ sudo cp configs/.p10k.zsh ~/.p10k.zsh
 sudo cp configs/.zprofile ~/.zprofile
 sudo sh -c 'echo "export PATH=\"$HOME/.local/share/pypoetry/venv/bin:\$PATH\"" >> ~/.zshrc'
 sudo sh -c 'echo "export PATH=\"$HOME/powerlevel10k:\$PATH\"" >> ~/.zshrc'
+eval "$(direnv hook zsh)"
 source ~/.zprofile
 source ~/.p10k.zsh
 source ~/.zshrc
