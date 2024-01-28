@@ -9,6 +9,7 @@ if ! command -v direnv &>/dev/null; then
 
     # Install direnv using the appropriate package manager for your system
     if command -v dnf &>/dev/null; then
+        sudo yum install util-linux-user -y 
         curl -sfL https://direnv.net/install.sh | bash
         eval "$(direnv hook zsh)"
 
@@ -103,5 +104,6 @@ source ~/.zprofile
 source ~/.p10k.zsh
 source ~/.zshrc
 # Switch the shell.
-chsh -s $(which zsh)
+
+sudo chsh -s $(which zsh)
 echo "Zsh setup and configuration completed."
