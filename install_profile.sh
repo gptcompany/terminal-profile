@@ -1,7 +1,7 @@
 #!/bin/bash
 echo $SHELL
 echo $PATH
-set -euxo pipefail
+
 
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
