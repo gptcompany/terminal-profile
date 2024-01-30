@@ -10,7 +10,6 @@ if ! command -v direnv &>/dev/null; then
 
     # Install direnv using the appropriate package manager for your system
     if command -v dnf &>/dev/null; then
-        sudo yum install util-linux-user -y 
         curl -sfL https://direnv.net/install.sh | bash
         eval "$(direnv hook zsh)"
 
