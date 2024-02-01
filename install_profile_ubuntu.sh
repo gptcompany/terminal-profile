@@ -45,8 +45,8 @@ echo "Both pyenv and direnv are installed."
 
 # Install plug-ins (you can git-pull to update them later).
 # Define the plugin directories
-syntax_highlighting_dir=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-autosuggestions_dir=~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+syntax_highlighting_dir=$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+autosuggestions_dir=$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 # Check if the directories already exist and are not empty
 if [ -d "$syntax_highlighting_dir" ] && [ -n "$(ls -A $syntax_highlighting_dir)" ]; then
@@ -90,23 +90,24 @@ backup_file() {
 }
 
 # Backup existing configuration files if they exist
-backup_file ~/.zshrc
-backup_file ~/.p10k.zsh
-backup_file ~/.zprofile
+backup_file $HOME/.zshrc
+backup_file $HOME/.p10k.zsh
+backup_file $HOME/.zprofile
 # Replace the configs with the saved one.
-sudo cp configs/.zshrc ~/.zshrc
-sudo cp configs/.p10k.zsh ~/.p10k.zsh
-sudo cp configs/.zprofile ~/.zprofile
+sudo cp configs/ubuntu/.zshrc $HOME/.zshrc
+sudo cp configs/ubuntu/.p10k.zsh $HOME/.p10k.zsh
+sudo cp configs/ubuntu/.zprofile $HOME/.zprofile
 sudo sh -c 'echo "export PATH=\"$HOME/.local/share/pypoetry/venv/bin:\$PATH\"" >> ~/.zshrc'
 sudo sh -c 'echo "export PATH=\"$HOME/powerlevel10k:\$PATH\"" >> ~/.zshrc'
 eval "$(direnv hook zsh)"
-source ~/.zprofile
-source ~/.p10k.zsh
-source ~/.zshrc
+source $HOME/.zprofile
+source $HOME/.p10k.zsh
+source $HOME/.zshrc
 # Switch the shell.
 
 if [ "$current_user" = "ec2-user" ] || [ "$current_user" = "ubuntu" ]; then
     echo "Changing shell for $current_user"
+    sudo apt-get install passwd -y
     sudo chsh -s $(which zsh) "$current_user"
 fi
 echo "Zsh setup and configuration completed."
