@@ -4,8 +4,8 @@ sudo apt-get upgrade -y
 # Install Powerline for VIM.
 sudo apt-get install -y python3-pip
 pip3 install --user powerline-status
-sudo cp configs/.vimrc ~/.vimrc
-sudo apt-get  install -y fonts-powerline
+#sudo cp configs/.vimrc ~/.vimrc
+sudo apt-get install fonts-powerline -y
 
 # Install Patched Font
 mkdir ~/.fonts
