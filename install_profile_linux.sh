@@ -104,10 +104,22 @@ source $HOME/.zprofile
 source $HOME/.p10k.zsh
 source $HOME/.zshrc
 # Switch the shell.
+sudo yum install passwd -y
 
-if [ "$current_user" = "ec2-user" ] || [ "$current_user" = "ubuntu" ]; then
-    echo "Changing shell for $current_user"
-    sudo yum install passwd -y
+# Attempt to change the default shell using chsh
+if command -v chsh &>/dev/null; then
     sudo chsh -s $(which zsh) "$current_user"
+    if [ $? -eq 0 ]; then
+        echo "Shell changed to Zsh using chsh."
+    else
+        echo "chsh command failed, falling back to usermod..."
+        sudo usermod -s $(which zsh) "$current_user"
+        echo "Shell changed to Zsh using usermod."
+    fi
+else
+    echo "chsh command not found. Falling back to usermod..."
+    sudo usermod -s $(which zsh) "$current_user"
+    echo "Shell changed to Zsh using usermod."
 fi
+
 echo "Zsh setup and configuration completed."
