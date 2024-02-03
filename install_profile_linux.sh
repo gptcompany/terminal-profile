@@ -7,21 +7,9 @@ echo "Current PATH: $PATH"
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
     echo "direnv is not installed. Installing..."
-
-    # Install direnv using the appropriate package manager for your system
-    if command -v dnf &>/dev/null; then
-        curl -sfL https://direnv.net/install.sh | bash
-        eval "$(direnv hook zsh)"
-
-    elif command -v apt-get &>/dev/null; then
-        sudo apt-get install direnv -y
-        eval "$(direnv hook zsh)"
-
-    else
-        echo "Unsupported package manager. Please install direnv manually."
-        
-    fi
-
+    curl -sfL https://direnv.net/install.sh | bash
+    eval "$(direnv hook zsh)"
+    eval "$(direnv hook bash)"
     echo "direnv has been installed."
 fi
 
@@ -121,5 +109,6 @@ else
     sudo usermod -s $(which zsh) "$current_user"
     echo "Shell changed to Zsh using usermod."
 fi
-
+eval "$(direnv hook zsh)"
+eval "$(direnv hook bash)"
 echo "Zsh setup and configuration completed."
