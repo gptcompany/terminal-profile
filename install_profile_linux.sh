@@ -7,21 +7,9 @@ echo "Current PATH: $PATH"
 # Check if direnv is installed
 if ! command -v direnv &>/dev/null; then
     echo "direnv is not installed. Installing..."
-
-    # Install direnv using the appropriate package manager for your system
-    if command -v dnf &>/dev/null; then
-        curl -sfL https://direnv.net/install.sh | bash
-        eval "$(direnv hook zsh)"
-
-    elif command -v apt-get &>/dev/null; then
-        sudo apt-get install direnv -y
-        eval "$(direnv hook zsh)"
-
-    else
-        echo "Unsupported package manager. Please install direnv manually."
-        
-    fi
-
+    curl -sfL https://direnv.net/install.sh | bash
+    eval "$(direnv hook zsh)"
+    eval "$(direnv hook bash)"
     echo "direnv has been installed."
 fi
 
@@ -104,10 +92,23 @@ source $HOME/.zprofile
 source $HOME/.p10k.zsh
 source $HOME/.zshrc
 # Switch the shell.
+sudo yum install passwd -y
 
-if [ "$current_user" = "ec2-user" ] || [ "$current_user" = "ubuntu" ]; then
-    echo "Changing shell for $current_user"
-    sudo yum install passwd -y
+# Attempt to change the default shell using chsh
+if command -v chsh &>/dev/null; then
     sudo chsh -s $(which zsh) "$current_user"
+    if [ $? -eq 0 ]; then
+        echo "Shell changed to Zsh using chsh."
+    else
+        echo "chsh command failed, falling back to usermod..."
+        sudo usermod -s $(which zsh) "$current_user"
+        echo "Shell changed to Zsh using usermod."
+    fi
+else
+    echo "chsh command not found. Falling back to usermod..."
+    sudo usermod -s $(which zsh) "$current_user"
+    echo "Shell changed to Zsh using usermod."
 fi
+eval "$(direnv hook zsh)"
+eval "$(direnv hook bash)"
 echo "Zsh setup and configuration completed."
